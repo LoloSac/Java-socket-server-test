@@ -50,10 +50,13 @@ public class Server {
         String msg = new String();
         if (type.equals("CONNECTED")) {
             msg = "Client" + clientID + " connected.";
+        } else if (type.equals("DISCONNECTED")) {
+            msg = "Client" + clientID + " disconnected.";
         } else {
             msg = "ERROR";
         }
         for (ClientHandler handler : clients.values()) {
+            System.out.println(msg);
             handler.send(msg);
         }
     }
@@ -95,6 +98,7 @@ public class Server {
 
                 }
                 System.out.println("Shutting down thread corresponding to client" + clientID + "...");
+                sysBroadcast(clientID, "DISCONNECTED");
                 clientSocket.close();
 
             } catch (IOException e) {
