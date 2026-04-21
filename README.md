@@ -1,4 +1,4 @@
-#Simple Java Socket App
+# Simple Java Socket App
 
 This is a small project I made to practice working with server sockets in Java.
 
