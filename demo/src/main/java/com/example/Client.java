@@ -57,10 +57,17 @@ public class Client {
                     output.writeUTF(str);
                     output.flush();
                 }
-                client.shutdown();
 
             } catch (IOException e) {
                 System.out.println("Error writing to server: " + e);
+            } finally {
+                client.shutdown();
+                try {
+                    output.close();
+                    userIn.close();
+                } catch (IOException e) {
+                    System.out.println("Error closing resources: " + e);
+                }
             }
         }
     }

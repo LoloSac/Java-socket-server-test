@@ -56,9 +56,9 @@ public class Server {
             msg = "ERROR";
         }
         for (ClientHandler handler : clients.values()) {
-            System.out.println(msg);
             handler.send(msg);
         }
+        System.out.println(msg);
     }
 
     private class ClientHandler extends Thread {
@@ -98,13 +98,13 @@ public class Server {
 
                 }
                 System.out.println("Shutting down thread corresponding to client" + clientID + "...");
-                sysBroadcast(clientID, "DISCONNECTED");
                 clientSocket.close();
 
             } catch (IOException e) {
-                System.out.println("Thread error: " + e);
+                System.out.println("Client" + clientID + " disconnected abruptly: " + e);
             } finally {
                 clients.remove(clientID);
+                sysBroadcast(clientID, "DISCONNECTED");
                 try {
                     this.clientSocket.close();
                 } catch (IOException e) {
